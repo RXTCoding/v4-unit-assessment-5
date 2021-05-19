@@ -31,16 +31,16 @@ class Nav extends Component {
   }
   
   render() {
-    // console.log(this.props)
-    // const {username, profile_pic}= this.props
+    console.log(this.props)
+    const {username, profile_pic}= this.props
       return this.props.location.pathname !== '/' &&
         <div className='nav'>
           <div className='nav-profile-container'>
-            <div className='nav-profile-pic' style={{backgroundImage: `url('${this.props.profile_pic}')`}}></div>
-            <p>{this.props.username}</p>
+            <div className='nav-profile-pic' style={{backgroundImage: `url('${profile_pic}')`}}></div>
+            <p>{username}</p>
           </div>
           <div className='nav-links'>
-            <Link to='/Dash'><img className='nav-img' src={homeLogo} alt='home' /></Link>
+            <Link to='/dash'><img className='nav-img' src={homeLogo} alt='home' /></Link>
             <Link to= '/form'><img className='nav-img' src={newLogo} alt='new post' /></Link>
           </div>
           <Link to='/'><img className='nav-img logout' src={logoutLogo} alt='logout' onClick={this.logout}/></Link>
@@ -48,4 +48,4 @@ class Nav extends Component {
   }
 }
 const mapStateToProps = state=> state 
-export default withRouter( connect (mapStateToProps, {updateUser, logout})) (Nav);
+export default withRouter( connect(mapStateToProps, {updateUser, logout})(Nav)); //<-- nav goes in withrouter 

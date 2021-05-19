@@ -3,7 +3,7 @@ const express = require('express'),
       userCtrl = require('./controllers/user'),
       postCtrl = require('./controllers/posts')
 const massive= require ('massive')
-const bcrypt= require('bcrypt')
+// const bcrypt= require('bcryptjs')
 const session= require('express-session')
 
 const {SERVER_PORT, CONNECTION_STRING, SECRET_SESSION}= process.env
@@ -11,11 +11,12 @@ const {SERVER_PORT, CONNECTION_STRING, SECRET_SESSION}= process.env
 massive({
     connectionString: CONNECTION_STRING,
     ssl:{
-        rejectUnauthorized:false 
+        rejectUnauthorized: false 
     }
 }).then((db)=>{
-    app.set("db", db)
-    app.listen(4000, () => console.log(`running on ${4000}`))
+    app.set("db", db) ///<-- put in to make sure db is connected
+    console.log('db connected')
+    app.listen(SERVER_PORT, () => console.log(`running on ${SERVER_PORT}`))
 
 }).catch((err)=> console.log(err))
 
@@ -27,7 +28,7 @@ app.use(session({
     secret: SECRET_SESSION,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 1000 * 60 * 60 *24 }
 }));
 
 //Auth Endpoints
